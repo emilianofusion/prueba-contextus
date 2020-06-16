@@ -1,0 +1,7 @@
+/libs
+*.log
+*.env
+composer.*
+/loader
+/config
+/core
