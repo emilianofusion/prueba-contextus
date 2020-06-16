@@ -72,24 +72,17 @@ class contextusController {
 		$push_notification->setBody($body);
 		$push_notification->setProcessed(false);
 
-		try {
-			$this->app->save($push_notification);
-			$json = jsonResponse([
-				"msj" => "Push notification created!",
-			]);
-		} catch (Exception $e) {
-			$json = jsonResponse([
-				"msj" => "Error to create: " . $e->getMessage(),
-			],
-				500
-			);
-		}
+		$this->app->save($push_notification);
+		$json = jsonResponse([
+			"msj" => "Push notification created!",
+		]);
 
 		return $json;
 	}
 
 	// Check notifications
 	public function listenNotifications() {
+		clearstatcache();
 		// Load notification
 		$response = $this->push_model->getNewNotification($this->user->getId());
 
@@ -101,8 +94,7 @@ class contextusController {
 			// Json response
 			return jsonResponse($response);
 		} else {
-			usleep(100000);
-			clearstatcache();
+			usleep(200000);
 			$this->listenNotifications();
 		}
 
