@@ -14,10 +14,6 @@ function check_push(){
 
 // Create push notification
 function push_me(textMe, bodyMe){
- 	if(!Push.Permission.has()){
-		Push.Permission.request();
-	}
-
 	Push.create(
 		textMe,
 		{
@@ -34,5 +30,8 @@ function push_me(textMe, bodyMe){
 
 // Initialize
 $( document ).ready(function() {
-  check_push();
+	if(!Push.Permission.has()){
+		Push.Permission.request();
+	}
+  	check_push();
 });

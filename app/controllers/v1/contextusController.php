@@ -40,22 +40,13 @@ class contextusController {
 
 	// Update user allow notification
 	public function updateUserNotification() {
-		$alow_notifications = $this->app->put()->alow_notifications;
-
+		$alow_notifications = filter_var($this->app->put()->alow_notifications, FILTER_VALIDATE_BOOLEAN);
 		$this->user->setAllowPNotification($alow_notifications);
 
-		try {
-			$this->app->save($this->user);
-			$json = jsonResponse([
-				"msj" => "User notifications updated to " . $alow_notifications,
-			]);
-		} catch (Exception $e) {
-			$json = jsonResponse([
-				"msj" => "Error to update: " . $e->getMessage(),
-			],
-				500
-			);
-		}
+		$this->app->save($this->user);
+		$json = jsonResponse([
+			"msj" => "User notifications updated to " . $this->app->put()->alow_notifications,
+		]);
 
 		return $json;
 	}

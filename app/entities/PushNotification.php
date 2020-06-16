@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(
- * 	schema="public",
  * 	name="push_notification"
  * )
  *
